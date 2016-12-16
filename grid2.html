@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Slider</title>
+    <!-- Latest compiled and minified CSS -->
+ <!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> -->
+    <link rel="stylesheet" type="text/css" href="np-slider.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <script src="np-slider.js"></script>
+
+  
+</head>
+<body>
+   <div id="np-slider-wrapper">
+        <ul id="np-slider">
+            <li class="np-slide">
+                <!--<img src="images/20.jpg" class="img-responsive">-->
+                <div class="np-row">
+                    <div class="np-grid-6 bigger">
+                        <a href="#"><img src="images/21.jpg" class="sm-img"></a>
+                    </div>
+                    <div class="np-grid-6 bigger">
+                        <a href="#"><img src="images/1.jpg" class="sm-img"></a>
+                    </div>
+                </div>
+            </li>
+            <li class="np-slide">
+                <!--<img src="images/10.jpg" class="img-responsive">-->
+               <div class="np-row">
+                    <div class="np-grid-6 bigger">
+                        <a href="#"><img src="images/20.jpg" class="sm-img"></a>
+                    </div>
+                    <div class="np-grid-6 bigger">
+                        <a href="#"><img src="images/10.jpg" class="sm-img"></a>
+                    </div>
+                </div>
+            </li>
+            <li class="np-slide">
+                <!--<img src="images/2.jpg" class="img-responsive">-->
+                <div class="np-row">
+                    <div class="np-grid-6 bigger">
+                        <a href="#"><img src="images/16.jpg" class="sm-img"></a>
+                    </div>
+                    <div class="np-grid-6 bigger">
+                        <a href="#"><img src="images/3.jpg" class="sm-img"></a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="np-controlls">
+        <button class="np-left"> <img src="images/slider/arrow_r.png"> </button>
+        <button class="np-right"> <img src="images/slider/arrow_l.png"> </button>
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            //npSlider(40, 400);
+            $("#np-slider").npSlider({
+                full_width: true,
+                parent_width: true,
+                //slider_max_height: 400,
+                next_slide_space: 0,
+                slide_space: 0,
+                grid_space: 15,
+                slide_time: 500,
+                autoplay: false,
+                play_duration: 2000,
+                slider_type: 2,
+                slingle_slide_on_phone: true
+            });
+        });
+    </script>
+
+</body>
+</html>
