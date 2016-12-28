@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Slider</title>
+
+    <link rel="stylesheet" type="text/css" href="np-slider.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <script src="np-slider.js"></script>
+
+  
+</head>
+<body>
+   <div id="np-slider-wrapper">
+        <ul id="np-slider">
+            <li class="np-slide">
+                <div class="np-row">
+                    <div class="np-grid-3 sub-images">
+                        <div class="np-grid-12">
+                            <img src="images/1.jpg" class="sm-img">
+                        </div>
+                        <div class="np-grid-12">
+                            <img src="images/2.jpg" class="sm-img">
+                        </div>
+                    </div>
+                    <div class="np-grid-6 bigger">
+                        <img src="images/21.jpg" class="">
+                    </div>
+                    <div class="np-grid-3">
+                        <div class="np-grid-12">
+                            <img src="images/7.jpg" class="sm-img">
+                        </div>
+                        <div class="np-grid-12">
+                            <img src="images/8.jpg" class="sm-img">
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="np-slide">
+                <div class="np-row">
+                    <div class="np-grid-3 sub-images">
+                        <div class="np-grid-12">
+                            <img src="images/1.jpg" class="sm-img">
+                        </div>
+                        <div class="np-grid-12">
+                            <img src="images/2.jpg" class="sm-img">
+                        </div>
+                    </div>
+                    <div class="np-grid-6 bigger">
+                        <img src="images/21.jpg" class="">
+                    </div>
+                    <div class="np-grid-3">
+                        <div class="np-grid-12">
+                            <img src="images/7.jpg" class="sm-img">
+                        </div>
+                        <div class="np-grid-12">
+                            <img src="images/8.jpg" class="sm-img">
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="np-slide">
+                <div class="np-row">
+                    <div class="np-grid-3 sub-images">
+                        <div class="np-grid-12">
+                            <img src="images/1.jpg" class="sm-img">
+                        </div>
+                        <div class="np-grid-12">
+                            <img src="images/2.jpg" class="sm-img">
+                        </div>
+                    </div>
+                    <div class="np-grid-6 bigger">
+                        <img src="images/21.jpg" class="">
+                    </div>
+                    <div class="np-grid-3">
+                        <div class="np-grid-12">
+                            <img src="images/7.jpg" class="sm-img">
+                        </div>
+                        <div class="np-grid-12">
+                            <img src="images/8.jpg" class="sm-img">
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="np-controlls">
+        <button class="np-left"> <img src="images/slider/arrow_r.png"> </button>
+        <button class="np-right"> <img src="images/slider/arrow_l.png"> </button>
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            //npSlider(40, 400);
+            $("#np-slider").npSlider({
+                full_width: true,
+                parent_width: true,
+                //slider_max_height: 400,
+                next_slide_space: 0,
+                slide_space: 0,
+                grid_space: 5,
+                slide_time: 500,
+                autoplay: false,
+                play_duration: 2000,
+                slider_type: 7,
+                slingle_slide_on_phone: true,
+            });
+        });
+    </script>
+
+</body>
+</html>

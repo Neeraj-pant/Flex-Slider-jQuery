@@ -40,7 +40,7 @@
 }
 @media (max-width: 768px){
 	.np-slide img{
-		padding: 7px 7px 0 0;
+		padding: 0;
 	}
 	.row {
 		padding-bottom: 0 !important;
@@ -140,6 +140,18 @@
 	padding: 0 15px;
 	box-sizing: border-box;
 }
+.np-grid-3{
+	width: 25%;
+	float: left;
+	padding: 0 15px;
+	box-sizing: border-box;
+}
+.np-grid-12{
+	width: 100%;
+	padding: 0 15px;
+	box-sizing: border-box;
+}
+
 
 @media (max-width: 768px){
 	.np-controlls img {

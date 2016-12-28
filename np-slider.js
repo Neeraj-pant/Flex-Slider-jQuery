@@ -8,18 +8,18 @@
 			slide_space: 0,
 			slide_time: 300,
 			next_slide_space: 0,
-			slider_max_height: null,
+			slider_height: null,
 			full_width: true,
-			parent_width: false,
+			parent_width: true,
 			grid_space: 10,
-			slider_type: 5,
+			slider_type: 1,
 			slingle_slide_on_phone: true
 		};
 
 		var setting = $.extend({}, defaults, options);
 
 
-		// ser Slides apperance
+		// set Slides apperance
 		if(setting.slingle_slide_on_phone){
 			if($(window).innerWidth() < 768){
 				st_slides_apperance(this);
@@ -34,27 +34,25 @@
 
 		// Initialize slider and functionality
 		init_slider(this);
+		
 		var instance = this;
 		$(window).resize(function(){
-			init_slider(instance);
+			//init_slider(instance);
+
 			// Equal size of all images in slides
-			if (setting.slider_type == 5) {
-				instance.find (".bigger").find ("img").height ('auto');
-			}
-			if(setting.slider_type != 5 && !setting.single){
-				instance.find (".bigger").find ("img").height ('auto');
-			}
+			var all_image = instance.find (".bigger").find ("img");
+			all_image.height ('auto');
 		});
 
 		// Equal size of all images in slides
-		if (setting.slider_type == 5) {
+		if (setting.slider_type >= 5) {
 			var grid_image = this.find ("li:first-child").find (".bigger img").innerHeight () / 2;
-			this.find (".bigger").find ("img").height (grid_image * 2);
+			this.find (".sm-img").height (grid_image - setting.grid_space );
+			this.find (".sm-img").parent().height (grid_image - setting.grid_space / 2);
 		}
-		if(setting.slider_type != 5 && !setting.single){
-			if($(window).width() <= 768){
+		if(!setting.single){
+			if($(window).width() <= 768 && setting.slider_type < 5){
 				var max_ul_height = get_min_hiehgt_image(this);
-				console.log(max_ul_height)
 				this.css('height', max_ul_height);
 			}else{
 				var grid_image = this.find ("li:first-child").find (".bigger img").innerHeight ();
@@ -94,8 +92,8 @@
 			else {
 				$this.height ($this.find ("li.active").find (".bigger").find ("img").height ());
 			}
-			if (setting.slider_max_height != null) {
-				$this.height (setting.slider_max_height);
+			if (setting.slider_height != null) {
+				$this.height (setting.slider_height);
 			}
 
 
@@ -133,24 +131,62 @@
 					j++;
 				});
 			}
+			else if(setting.slider_type == 4){
+				small_images.each (function () {
+					$(this).closest(".bigger").css('padding', 0);
+					if( j % 4 == 0){
+						padding = 0;
+						$ (this).css ('padding', padding);
+					}else{
+						padding = '0 ' + setting.grid_space / 2 + 'px 0 0';
+						$ (this).css ('padding', padding);
+					}
+					j++;
+				});
+			}
 
-			if (setting.slider_type == 5 && setting.grid_space != 0) {
+			if (setting.slider_type >= 5) {
+				$(".np-slide").find("div[class^=np-grid-]").css('padding', 0);
 				small_images.each (function () {
 					switch (j) {
 						case 1:
 							padding = '0 ' + setting.grid_space / 2 + 'px ' + setting.grid_space / 2 + 'px ' + setting.grid_space + 'px';
+							if(setting.slider_type == 6){
+								padding = '0 ' + setting.grid_space / 2 + 'px ' + setting.grid_space / 2 + 'px 0';
+							}
+							if(setting.slider_type == 7){
+								padding = '0 ' + setting.grid_space + 'px ' + setting.grid_space / 2 + 'px 0';
+							}
 							$ (this).css ('padding', padding);
 							break;
 						case 2:
-							padding = '0 ' + setting.grid_space + 'px ' + setting.grid_space / 2 + 'px ' + setting.grid_space / 2 + 'px';
+							padding = '0 ' + setting.grid_space / 2 + 'px ' + setting.grid_space / 2 + 'px ' + setting.grid_space / 2 + 'px';
+							if(setting.slider_type == 6){
+								padding = '0 ' + setting.grid_space + 'px ' + setting.grid_space / 2 + 'px ' + setting.grid_space / 2 + 'px';
+							}
+							if(setting.slider_type == 7){
+								padding = setting.grid_space / 2 + 'px ' + setting.grid_space + 'px 0 0';
+							}
 							$ (this).css ('padding', padding);
 							break;
 						case 3:
 							padding = setting.grid_space / 2 + 'px ' + setting.grid_space / 2 + 'px ' + '0 ' + setting.grid_space + 'px';
+							if(setting.slider_type == 6){
+								padding = setting.grid_space / 2 + 'px ' + setting.grid_space / 2 + 'px ' + '0 ' + setting.grid_space / 2 + 'px';
+							}
+							if(setting.slider_type == 7){
+								padding = '0 0 ' + setting.grid_space / 2 + 'px ' + setting.grid_space + 'px';
+							}
 							$ (this).css ('padding', padding);
 							break;
 						case 4:
-							padding = setting.grid_space / 2 + 'px ' + setting.grid_space + 'px ' + '0 ' + setting.grid_space / 2 + 'px';
+							padding = setting.grid_space / 2 + 'px ' + ' 0 0 ' + setting.grid_space / 2 + 'px ';
+							if(setting.slider_type == 6){
+								padding = setting.grid_space / 2 + 'px ' + setting.grid_space + 'px ' + ' 0 ' + setting.grid_space / 2 + 'px ';
+							}
+							if(setting.slider_type == 7){
+								padding = setting.grid_space / 2 + 'px 0 0 ' + setting.grid_space + 'px ';
+							}	
 							$ (this).css ('padding', padding);
 							j = 0;
 							break;
@@ -159,13 +195,16 @@
 				});
 			}
 
+
 			// Align Slides in one row
 			slides.each (function (index) {
 				if (!setting.single) {
 					small_images.innerHeight (grid_image);
 				}
 
-				slides.height (setting.slider_height);
+				if(setting.slider_height){
+					slides.height (setting.slider_height);
+				}
 				slides.width (slide_width);
 
 				element_width += slide_width;
@@ -239,8 +278,6 @@
 			var element_left = $(".np-slide").width() + slide_space;
 
 			$( ".np-slide" ).each(function( index ) {
-				// console.log($(this).attr('data-left'));
-				// console.log($(this).data('left'));
 				var current_left = $(this).attr('data-left');
 				current_left = parseInt(current_left);
 				element_left = parseInt(element_left);
@@ -339,16 +376,38 @@
 		function st_slides_apperance($this)
 		{
 			var i, slide, parent_li, new_slide;
-			if(setting.slider_type == 2 || setting.slider_type == 3){
+			var grid_class = "np-grid-3";
+
+			if(setting.slider_type == 2){
+				grid_class = 'np-grid-6';
+			}
+			else if(setting.slider_type == 3){
+				grid_class = 'np-grid-4';
+			}
+
+			if(!setting.single){
 				$this.find("li").each(function(){
 					i = 0;
 					parent_li = $(this);
+					if(setting.slider_type >= 5){
+						var slide_images = $(this).find("img");
+						$(slide_images.get().reverse()).each(function(){
+							var li = document.createElement('li');
+							li.className  = 'np-slide';
+							new_slide = "<div class='np-row'><div class='"+grid_class+" bigger'>";
+							new_slide +=  $(this).parent().html();
+							new_slide += "</div></div>";
+							li.insertAdjacentHTML( 'beforeend', new_slide);
+							parent_li.after(li);
+						});
+						parent_li.remove();
+					}
 					$(this).find(".np-row .bigger").each(function(){
 						i++;
 						if(i != 1){
 							var li = document.createElement('li');
 							li.className  = 'np-slide';
-							new_slide = "<div class='np-row'><div class='np-grid-4 bigger'>";
+							new_slide = "<div class='np-row'><div class='"+grid_class+" bigger'>";
 							new_slide +=  $(this).html();
 							new_slide += "</div></div>";
 							li.insertAdjacentHTML( 'beforeend', new_slide);
@@ -370,7 +429,6 @@
 			$this.each(function(){
 				$(this).find(".np-row .bigger").each(function(){
 					img_height = $(this).find('img').height();
-					console.log(img_height);
 					if(img_height <= max_height || max_height == 0){
 						max_height = img_height;
 					}
