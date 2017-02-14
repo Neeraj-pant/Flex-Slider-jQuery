@@ -5,10 +5,7 @@
 
     <link rel="stylesheet" type="text/css" href="np-slider.css">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-
-    <script src="np-slider.js"></script>
-
+    <script src="jquery.min.js"></script>
   
 </head>
 <body>
@@ -90,6 +87,7 @@
         <button class="np-right"> <img src="images/slider/arrow_l.png"> </button>
     </div>
 
+    <script src="np-slider.js"></script>
     <script type="text/javascript">
         $(document).ready(function(){
             $("#np-slider").npSlider({
@@ -98,7 +96,7 @@
                 play_duration: 3000,
                 slider_type: 7,
                 autoplay: false,
-                slingle_slide_on_phone: false
+                slingle_slide_on_phone: true
             });
         });
     </script>

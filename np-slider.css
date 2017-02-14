@@ -8,6 +8,7 @@
 	list-style: none;
 	overflow: hidden;
 }
+
 .np-slide.active{
 	display: block;
 }
@@ -64,8 +65,8 @@
 	width: 40px;
 	height: 40px;
 	position: absolute;
-	top: 50%;
-	margin-top: -20px;
+	/*top: calc(50% + 20px);*/
+	transform: translateY(-50%);
 	cursor: pointer;
 	z-index: 3;
 	text-indent: 99999px;
@@ -78,8 +79,8 @@
 	width: 40px;
 	height: 40px;
 	position: absolute;
-	top: 50%;
-	margin-top: -20px;
+	/*top: calc(50% + 20px);*/
+	transform: translateY(-50%);
 	cursor: pointer;
 	z-index: 3;
 	border: none;
@@ -92,13 +93,11 @@
   .row1 {
 	  padding-bottom: 0;
   }
-  .property-controlls {
-	width: 1170px;
-	margin: auto;
-}
+
 .np-slide img{
-  width: 100%;
-  box-sizing: border-box;
+  	width: 100%;
+	display: block;
+	box-sizing: border-box;
 }
   .np-slide .col-sm-6 .col-sm-6 {
 	  padding-right: 0;

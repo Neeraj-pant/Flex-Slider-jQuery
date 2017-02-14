@@ -13,15 +13,16 @@
 			parent_width: true,
 			grid_space: 10,
 			slider_type: 1,
-			slingle_slide_on_phone: true
+			slingle_slide_on_phone: true,
 		};
 
 		var setting = $.extend({}, defaults, options);
+		var from_phone = false;
+		var slider_skeleton = this[0].innerHTML;
 
-
-		// set Slides apperance
+		// set Slides appearance
 		if(setting.slingle_slide_on_phone){
-			if($(window).innerWidth() < 768){
+			if($(window).innerWidth() <= 768){
 				st_slides_apperance(this);
 			}
 		}
@@ -34,14 +35,34 @@
 
 		// Initialize slider and functionality
 		init_slider(this);
-		
-		var instance = this;
-		$(window).resize(function(){
-			//init_slider(instance);
 
-			// Equal size of all images in slides
+		var instance = this; 
+		$(window).resize(function(){
+
 			var all_image = instance.find (".bigger").find ("img");
 			all_image.height ('auto');
+			var min_img_height = get_min_hiehgt_image(instance);
+			all_image.height (min_img_height);
+			$("#np-slider").height(min_img_height);
+
+			if (!setting.single) {
+				$(".sm-img").innerHeight (min_img_height / 2);
+			}
+
+			init_slider(instance);
+
+			if(setting.slingle_slide_on_phone){
+
+				if($(window).innerWidth() <= 768){
+					st_slides_apperance(instance);
+				}
+				else if(from_phone === true){
+					from_phone = false;
+					$("#np-slider").html(slider_skeleton);
+				}
+			}
+
+			
 		});
 
 		// Equal size of all images in slides
@@ -72,7 +93,7 @@
 				device_width = $this.closest("#np-slider-wrapper").parent().width();
 			}
 
-			if(setting.slider_type != 5){
+			if(setting.slider_type < 5){
 				setting.slide_space = 0;
 			}
 
@@ -99,10 +120,8 @@
 
 
 			var i = 0;
-			var j       = 1;
+			var j = 1;
 			var padding = 0;
-
-
 
 			// Set padding or Space while in grid
 			if(setting.slider_type == 2){
@@ -144,8 +163,7 @@
 					j++;
 				});
 			}
-
-			if (setting.slider_type >= 5) {
+			else if (setting.slider_type >= 5) {
 				$(".np-slide").find("div[class^=np-grid-]").css('padding', 0);
 				small_images.each (function () {
 					switch (j) {
@@ -157,7 +175,7 @@
 							if(setting.slider_type == 7){
 								padding = '0 ' + setting.grid_space + 'px ' + setting.grid_space / 2 + 'px 0';
 							}
-							$ (this).css ('padding', padding);
+							$(this).css ('padding', padding);
 							break;
 						case 2:
 							padding = '0 ' + setting.grid_space / 2 + 'px ' + setting.grid_space / 2 + 'px ' + setting.grid_space / 2 + 'px';
@@ -167,7 +185,7 @@
 							if(setting.slider_type == 7){
 								padding = setting.grid_space / 2 + 'px ' + setting.grid_space + 'px 0 0';
 							}
-							$ (this).css ('padding', padding);
+							$(this).css ('padding', padding);
 							break;
 						case 3:
 							padding = setting.grid_space / 2 + 'px ' + setting.grid_space / 2 + 'px ' + '0 ' + setting.grid_space + 'px';
@@ -177,7 +195,7 @@
 							if(setting.slider_type == 7){
 								padding = '0 0 ' + setting.grid_space / 2 + 'px ' + setting.grid_space + 'px';
 							}
-							$ (this).css ('padding', padding);
+							$(this).css ('padding', padding);
 							break;
 						case 4:
 							padding = setting.grid_space / 2 + 'px ' + ' 0 0 ' + setting.grid_space / 2 + 'px ';
@@ -187,7 +205,7 @@
 							if(setting.slider_type == 7){
 								padding = setting.grid_space / 2 + 'px 0 0 ' + setting.grid_space + 'px ';
 							}	
-							$ (this).css ('padding', padding);
+							$(this).css ('padding', padding);
 							j = 0;
 							break;
 					}
@@ -198,10 +216,6 @@
 
 			// Align Slides in one row
 			slides.each (function (index) {
-				if (!setting.single) {
-					small_images.innerHeight (grid_image);
-				}
-
 				if(setting.slider_height){
 					slides.height (setting.slider_height);
 				}
@@ -279,6 +293,9 @@
 
 			$( ".np-slide" ).each(function( index ) {
 				var current_left = $(this).attr('data-left');
+				if(isNaN(current_left)){
+					current_left = 0;	
+				}
 				current_left = parseInt(current_left);
 				element_left = parseInt(element_left);
 				var left = current_left - element_left;
@@ -292,6 +309,9 @@
 
 						// Assign values to Slides elements
 						var last = $(".last-slide").attr('data-left');
+						if(isNaN(last)){
+							last = 0;	
+						}
 						last = parseInt(last);
 						var last_left = last + element_left;
 
@@ -332,9 +352,15 @@
 
 			if($(".active").next(".np-slide").length){
 				var next_slide = parseInt('-' + $(".active").next(".np-slide").attr('data-left'));
+				if(isNaN(next_slide)){
+					next_slide = 0;
+				}
 			}
 			else{
 				var next_slide = parseInt('-' + $(".np-slide:first-child").attr('data-left'));
+				if(isNaN(next_slide)){
+					next_slide = 0;
+				}
 			}
 			// next_slide += next_slide;
 			$(".active").prev('.np-slide').attr('data-left', next_slide);
@@ -342,6 +368,9 @@
 
 			$( ".np-slide" ).each(function( index ) {
 				var current_left = $(this).attr('data-left');
+				if(isNaN(current_left)){
+					current_left = 0;
+				}
 				current_left = parseInt(current_left);
 				element_left = parseInt(element_left);
 				var left = current_left + element_left;
@@ -418,6 +447,7 @@
 				});
 				$("div[class^=np-grid-]").css('width', "100%");
 				$("div[class^=np-grid-] img").css('height', "auto");
+				from_phone = true;
 			}
 		}
 
@@ -425,16 +455,16 @@
 
 		function get_min_hiehgt_image($this){
 			var img_height = 0;
-			var max_height = 0;
+			var min_height = 0;
 			$this.each(function(){
 				$(this).find(".np-row .bigger").each(function(){
 					img_height = $(this).find('img').height();
-					if(img_height <= max_height || max_height == 0){
-						max_height = img_height;
+					if(img_height <= min_height || min_height == 0){
+						min_height = img_height;
 					}
 				});
 			});
-			return max_height;
+			return min_height;
 		}
 
 	};
