@@ -38,39 +38,33 @@
 
 		var instance = this; 
 		$(window).resize(function(){
-
-			var all_image = instance.find (".bigger").find ("img");
-			all_image.height ('auto');
-			var min_img_height = get_min_hiehgt_image(instance);
-			all_image.height (min_img_height);
-			$("#np-slider").height(min_img_height);
-
-			if (!setting.single) {
-				$(".sm-img").innerHeight (min_img_height / 2);
-			}
-
-			init_slider(instance);
-
+			// Change slider style on rezizing from phone or on phone
 			if(setting.slingle_slide_on_phone){
-
 				if($(window).innerWidth() <= 768){
+					from_phone = true;
 					st_slides_apperance(instance);
 				}
 				else if(from_phone === true){
+					console.log(slider_skeleton)
 					from_phone = false;
 					$("#np-slider").html(slider_skeleton);
 				}
 			}
 
+			init_slider(instance);
+
+
+			// Set slider image initial size
+			var all_image = instance.find (".bigger").find ("img");
+			all_image.height ('auto');
+			var min_img_height = get_min_hiehgt_image(instance);
+			all_image.height (min_img_height);
+			$("#np-slider").height(min_img_height);
+			
+			align_arrow(instance);
 			
 		});
 
-		// Equal size of all images in slides
-		if (setting.slider_type >= 5) {
-			var grid_image = this.find ("li:first-child").find (".bigger img").innerHeight () / 2;
-			this.find (".sm-img").height (grid_image - setting.grid_space );
-			this.find (".sm-img").parent().height (grid_image - setting.grid_space / 2);
-		}
 		if(!setting.single){
 			if($(window).width() <= 768 && setting.slider_type < 5){
 				var max_ul_height = get_min_hiehgt_image(this);
@@ -116,7 +110,6 @@
 			if (setting.slider_height != null) {
 				$this.height (setting.slider_height);
 			}
-
 
 
 			var i = 0;
@@ -236,25 +229,13 @@
 			});
 
 
-
 			// Make responsive single slide mode
 			var active_img_height = $this.find ("li.active").find ("img").height ();
 			if (setting.single && $this.height () >= active_img_height) {
 				$this.height (active_img_height);
 			}
 
-
-			// Position slide Arrow
-			if (setting.slider_height != null) {
-				$this.height (setting.slider_height);
-				element_height = setting.slider_height;
-			}
-			else {
-				element_height = $this.height();
-			}
-
-			var arrow_top = element_height / 2;
-			$ (".np-controlls").css ('top', arrow_top);
+			align_arrow($this);
 
 		}
 
@@ -402,8 +383,23 @@
 		}
 
 
-		function st_slides_apperance($this)
-		{
+		function align_arrow($this) {
+			// Position slide Arrow
+			var element_height = 0;
+			if (setting.slider_height != null) {
+				$this.height (setting.slider_height);
+				element_height = setting.slider_height;
+			}
+			else {
+				element_height = $this.height();
+			}
+
+			var arrow_top = element_height / 2;
+			$ (".np-controlls").css ('top', arrow_top);
+		}
+
+
+		function st_slides_apperance($this) {
 			var i, slide, parent_li, new_slide;
 			var grid_class = "np-grid-3";
 
